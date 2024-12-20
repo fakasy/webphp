@@ -20,7 +20,11 @@ if (isset($_GET['id'])) {
 
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);    
+    if (empty($_POST['password'])) {
+        $password = $row['pass'];
+    } else {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    }
 
     $query = "UPDATE user SET username = ?, pass = ? WHERE id = ?";
     $stmt = mysqli_prepare($koneksi, $query);
@@ -65,10 +69,10 @@ if (isset($_POST['submit'])) {
                 <div class="space-y-2 ">
 
                     <input 
-                        type="hidden" 
+                        type="password" 
                         name="password" 
                         id="password"
-                        value="<?php echo $row['pass']; ?>" 
+                        value="" 
                         class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200 outline-none text-gray-700"
                     >
                 </div>
