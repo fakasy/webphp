@@ -1,6 +1,12 @@
 <?php
 include 'koneksi.php';
 
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit();
+}
+
+
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
